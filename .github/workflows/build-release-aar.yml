@@ -2,47 +2,43 @@ name: Build and Publish Release AAR
 
 on:
   push:
-    branches:
-      - main
+    tags:
+       - 'v*'
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
 
-      - name: Set up JDK
-        uses: actions/setup-java@v2
-        with:
-          java-version: '11'
+    - name: Checkout private tools
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Get Library Version
-        id: get_version
-        run: echo "::set-output name=library_version::$(grep -oP "libraryVersion = '\K[0-9.]+" build.gradle)"
+    - name: set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
 
-      - name: Build AAR
-        run: ./gradlew assembleRelease
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{ steps.get_version.outputs.library_version }}
-          release_name: Release v${{ steps.get_version.outputs.library_version }}
-          draft: false
-          prerelease: false
+    - name: Get Library Version
+      id: get_version
+      run: echo "::set-output name=library_version::$(./gradlew TestUtils:printLibraryVersion --quiet)"
 
-      - name: Upload AAR
-        id: upload_aar
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./path/to/your/aar/file.aar
-          asset_name: your-aar-file.aar
-          asset_content_type: application/octet-stream
+    - name: Generate Library AAR
+      run: ./gradlew TestUtils:assembleRelease
+
+    - name: Create pre-release
+      uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: ${{ steps.get_version.outputs.library_version }}
+        prerelease: true
+#        title: "Pre-release Build"
+        title : "v¬${{ steps.get_version.outputs.library_version }}""
+        files: |
+          app/build/outputs/aar/*.aar
