@@ -53,7 +53,7 @@ jobs:
         prerelease: false
         title: "v¬${{ steps.get_version.outputs.library_version }}"
         files: |
-          app/build/outputs/aar/*.aar
+          TestUtils/build/outputs/aar/*.aar
 
 
     - name: Update Readme

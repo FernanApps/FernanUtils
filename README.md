@@ -7,8 +7,8 @@ Include the JitPack.io Maven repo in your project's **settings.gradle** file
 
 ```groovy
 pluginManagement {  
-  repositories {     
-	  maven { url 'https://jitpack.io' }  
+  repositories {
+      maven { url 'https://jitpack.io' }  
   }  
 }  
 dependencyResolutionManagement {  
