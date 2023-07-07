@@ -47,7 +47,7 @@ jobs:
 
 
     - name: Update Readme
-            run: |
+      run: |
               USERNAME="${{ github.actor }}"
               REPOSITORY="${{ github.repository }}"
               VERSION=${{ steps.get_version.outputs.library_version }}
