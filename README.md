@@ -36,6 +36,6 @@ Then add this dependency to your app's build.gradle file
 
 ```groovy
 dependencies {
-    implementation "com.github.FernanApps:FernanApps/FernanUtils:0.0.2"
+    implementation "com.github.FernanApps:FernanUtils:+@aar"
 }
 ```
