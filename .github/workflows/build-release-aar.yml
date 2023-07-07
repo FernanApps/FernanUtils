@@ -60,10 +60,13 @@ jobs:
       run: |
               USERNAME="${{ github.actor }}"
               REPOSITORY="${{ github.repository }}"
+              REPO_NAME=$(basename "$REPOSITORY")
+
               VERSION=${{ steps.get_version.outputs.library_version }}
               CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
-              URL_IMP="com.github.$USERNAME:$REPOSITORY:$VERSION"
+              #URL_IMP="com.github.$USERNAME:$REPO_NAME:$VERSION"
+              URL_IMP="com.github.$USERNAME:$REPO_NAME:+@aar"
 
               sed -i 's|implementation \(\S\+\)|implementation "'$URL_IMP'"|g' README.md
 
