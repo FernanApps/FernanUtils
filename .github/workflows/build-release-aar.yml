@@ -31,9 +31,12 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    - name: Get Library Version
+    - name: Get Version App
       id: get_version
-      run: echo "::set-output name=library_version::$(./gradlew TestUtils:printLibraryVersion --quiet)"
+      run: |
+           library_version=$(./gradlew -q TestUtils:printLibraryVersion | tail -n 1)
+           echo -e "Version is $library_version"
+           echo "library_version=$library_version" >> $GITHUB_OUTPUT
 
     - name: Generate Library AAR
       run: ./gradlew TestUtils:assembleRelease
