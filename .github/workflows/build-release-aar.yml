@@ -9,8 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: github.event.head_commit.message =~ /^v\d+\.\d+\.\d+$/
-
+    if: startsWith(github.event.head_commit.message, 'v')
     steps:
     - name: Checkout private tools
       uses: actions/checkout@v3
