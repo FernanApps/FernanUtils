@@ -2,15 +2,21 @@ name: Build and Publish Release AAR
 
 on:
   push:
-    tags:
-       - 'v*'
+    branches:
+      - main
+      - master
+    paths-ignore:
+      - '*/'
+    push:
+      tags-ignore:
+        - '*'
+    message:
+      - '/v\d+\.\d+\.\d+/'
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     steps:
-
     - name: Checkout private tools
       uses: actions/checkout@v3
       with:
@@ -33,12 +39,11 @@ jobs:
       run: ./gradlew TestUtils:assembleRelease
 
     - name: Create pre-release
-      uses: "marvinpinto/action-automatic-releases@latest"
+      uses: marvinpinto/action-automatic-releases@latest
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         automatic_release_tag: ${{ steps.get_version.outputs.library_version }}
         prerelease: true
-#        title: "Pre-release Build"
-        title : "v¬${{ steps.get_version.outputs.library_version }}""
+        title: "v¬${{ steps.get_version.outputs.library_version }}"
         files: |
           app/build/outputs/aar/*.aar
