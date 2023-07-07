@@ -5,17 +5,11 @@ on:
     branches:
       - main
       - master
-    paths-ignore:
-      - '*/'
-    push:
-      tags-ignore:
-        - '*'
-    message:
-      - '/^v\d+\.\d+\.\d+$/'
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: startsWith(github.event.head_commit.message, 'v')
     steps:
     - name: Checkout private tools
       uses: actions/checkout@v3
