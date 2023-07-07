@@ -4,7 +4,7 @@ plugins {
 }
 
 ext {
-    libraryVersion = '0.0.3'
+    libraryVersion = '0.0.4'
 }
 
 android {
@@ -42,6 +42,10 @@ dependencies {
     implementation 'junit:junit:4.13.2'
     implementation 'androidx.test.ext:junit:1.1.5'
     implementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    implementation 'androidx.test:core:1.4.0'
+    debugImplementation 'androidx.fragment:fragment-testing:1.4.0'
+
 }
 
 task printLibraryVersion {
