@@ -4,7 +4,7 @@ plugins {
 }
 
 ext {
-    libraryVersion = '0.0.42'
+    libraryVersion = '0.0.43'
 }
 
 android {

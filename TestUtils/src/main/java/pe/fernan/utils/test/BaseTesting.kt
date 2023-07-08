@@ -46,14 +46,18 @@ abstract class BaseTesting {
         inline fun <reified T : Activity> launchActivity(cls: Class<T>, vararg data: Pair<String, Any>): T {
             val context: Context = ApplicationProvider.getApplicationContext()
             val intent = addDataToIntent(Intent(context, cls), *data)
-            val scenario = ActivityScenario.launch<T>(intent)
+            return launchActivity<T>(intent)
+        }
 
+        inline fun <reified T : Activity> launchActivity(intent: Intent): T {
+            val scenario = ActivityScenario.launch<T>(intent)
             var activity: T? = null
             scenario.onActivity {
                 activity = it
             }
             return activity!!
         }
+
 
 
 
