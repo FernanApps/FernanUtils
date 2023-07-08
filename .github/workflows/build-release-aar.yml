@@ -45,7 +45,7 @@ jobs:
     - name: Generate Library AAR
       run: ./gradlew TestUtils:assembleRelease
 
-    - name: Create pre-release
+    - name: Create Release AAR
       uses: marvinpinto/action-automatic-releases@latest
       with:
         repo_token: "${{ secrets.ATOKEN }}"
