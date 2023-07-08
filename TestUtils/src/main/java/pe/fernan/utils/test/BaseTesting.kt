@@ -15,6 +15,7 @@ import kotlin.concurrent.thread
 
 
 abstract class BaseTesting {
+    val context: Context get() = ApplicationProvider.getApplicationContext()
 
     fun launchActivity(cls: Class<*>): Activity {
         return launchActivity<Activity>(cls as Class<Activity>)
