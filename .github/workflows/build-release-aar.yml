@@ -55,6 +55,9 @@ jobs:
         files: |
           TestUtils/build/outputs/aar/*.aar
 
+    - name: AutoJitPack
+      uses: js6pak/start-jitpack@master
+
 
 #     - name: Update Readme
 #       run: |
